@@ -15,7 +15,7 @@ class ServerHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write(cmd)
+        self.wfile.write(cmd.encode())
 
     def do_POST(self):
         if self.path == '/store':
@@ -48,7 +48,7 @@ class ServerHandler(BaseHTTPRequestHandler):
 
 def main():
     print("starting server.....")
-    serveraddress = ('localhost',50505)
+    serveraddress = ('192.168.77.130',50505)
     httpd = HTTPServer(serveraddress,ServerHandler)
     print("running server")
     try:

